@@ -1,0 +1,934 @@
+private void proseshitungdata(){
+        //mencari peluang diagnosa POSITIF TUBERKULOSIS
+        String tb = "";
+        try{
+            String sql = "select count(id_pasien) as jumlah from training where diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                tb = rs.getString("jumlah");
+                //t_nama.setText(tb);
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang diagnosa NEGATIF TUBERKULOSIS
+        String normal = "";
+        try{
+            String sql = "select count(id_pasien) as jumlah from training where diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                normal = rs.getString("jumlah");
+                //t_usia.setText(normal);
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+                String kumuh = "";
+                if (c_kumuh.getSelectedItem().equals("TIDAK")){
+                    kumuh = "TIDAK";}
+                else { kumuh = "YA";}
+                
+                String interaksi = "";
+                if (c_interaksi.getSelectedItem().equals("TIDAK")){
+                    interaksi = "TIDAK";}
+                else { interaksi = "YA";}
+                
+                String hiv = "";
+                if (c_hiv.getSelectedItem().equals("TIDAK")){
+                    hiv = "TIDAK";}
+                else { hiv = "YA";}
+                
+                String roko = "";
+                if (c_roko.getSelectedItem().equals("TIDAK")){
+                    roko = "TIDAK";}
+                else { roko = "YA";}
+                
+                String mabuk = "";
+                if (c_mabuk.getSelectedItem().equals("TIDAK")){
+                    mabuk = "TIDAK";}
+                else { mabuk = "YA";}
+                
+                String narkoba = "";
+                if (c_narkoba.getSelectedItem().equals("TIDAK")){
+                    narkoba = "TIDAK";}
+                else { narkoba = "YA";}
+                
+                String nydada = "";
+                if (c_nydada.getSelectedItem().equals("TIDAK")){
+                    nydada = "TIDAK";}
+                else { nydada = "YA";}
+                
+                String pusing = "";
+                if (c_pusing.getSelectedItem().equals("TIDAK")){
+                    pusing = "TIDAK";}
+                else { pusing = "YA";}
+                
+                String dahakkeruh = "";
+                if (c_dahakkeruh.getSelectedItem().equals("TIDAK")){
+                    dahakkeruh = "TIDAK";}
+                else { dahakkeruh = "YA";}
+                
+                String batukdarah = "";
+                if (c_batukdarah.getSelectedItem().equals("TIDAK")){
+                    batukdarah = "TIDAK";}
+                else { batukdarah = "YA";}
+                
+                String bb = "";
+                if (c_bb.getSelectedItem().equals("TIDAK")){
+                    bb = "TIDAK";}
+                else { bb = "YA";}
+                
+                String kelelahan = "";
+                if (c_kelelahan.getSelectedItem().equals("TIDAK")){
+                    kelelahan = "TIDAK";}
+                else { kelelahan = "YA";}
+                
+                String lemas = "";
+                if (c_lemas.getSelectedItem().equals("TIDAK")){
+                    lemas = "TIDAK";}
+                else { lemas = "YA";}
+                
+                String benjol = "";
+                if (c_benjol.getSelectedItem().equals("TIDAK")){
+                    benjol = "TIDAK";}
+                else { benjol = "YA";}
+                
+                String demam = "";
+                if (c_demam.getSelectedItem().equals("TIDAK")){
+                    demam = "TIDAK";}
+                else { demam = "YA";}
+                
+                String kejang = "";
+                if (c_kumuh.getSelectedItem().equals("TIDAK")){
+                    kejang = "TIDAK";}
+                else { kejang = "YA";}
+                
+                String nysendi = "";
+                if (c_nysendi.getSelectedItem().equals("TIDAK")){
+                    nysendi = "TIDAK";}
+                else { nysendi = "YA";}
+                
+                String keringat = "";
+                if (c_keringat.getSelectedItem().equals("TIDAK")){
+                    keringat = "TIDAK";}
+                else { keringat = "YA";}
+                
+                String panas = "";
+                if (c_panas.getSelectedItem().equals("TIDAK")){
+                    panas = "TIDAK";}
+                else { panas = "YA";}
+                
+                String makan = "";
+                if (c_makan.getSelectedItem().equals("TIDAK")){
+                    makan = "TIDAK";}
+                else { makan = "YA";}
+                
+                String urine = "";
+                if (c_urine.getSelectedItem().equals("TIDAK")){
+                    urine = "TIDAK";}
+                else { urine = "YA";}
+                
+                String pucat = "";
+                if (c_pucat.getSelectedItem().equals("TIDAK")){
+                    pucat = "TIDAK";}
+                else { pucat = "YA";}
+        
+        double itb = Integer.parseInt(tb);
+        double inormal = Integer.parseInt(normal);
+        
+        //mencari peluang kumuh tapi tuberkulosis
+        try{
+            //String kumuhtb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where tinggal_tempat_kumuh = '"+kumuh+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String kumuhtb = rs.getString("jumlah");
+                t_hitung_kumuh.setText(kumuhtb+"/"+tb);
+                
+                double ikumuhtb = Double.parseDouble(kumuhtb);
+                double jkumuhtb = ikumuhtb / itb;
+                t_hasil_kumuh.setText(String.format("%.10f",jkumuhtb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang kumuh tapi normal
+        try{
+        //String kumuhnm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where tinggal_tempat_kumuh = '"+kumuh+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String kumuhnm = rs.getString("jumlah");
+                t_hitung_kumuh_normal.setText(kumuhnm+"/"+normal);
+                
+                double ikumuhnm = Double.parseDouble(kumuhnm);
+                double jkumuhnm = ikumuhnm / inormal;
+                t_hasil_kumuh_normal.setText(String.format("%.10f",jkumuhnm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang interaksi tapi tb
+        try{
+            //String interaksitb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where interaksi_langsung = '"+interaksi+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String interaksitb = rs.getString("jumlah");
+                t_hitung_interaksi.setText(interaksitb+"/"+tb);
+                
+                double iinteraksitb = Double.parseDouble(interaksitb);
+                double jinteraksitb = iinteraksitb / itb;
+                t_hasil_interaksi.setText(String.format("%.10f",jinteraksitb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang interaksi tapi normal
+        try{
+        //String interaksinm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where interaksi_langsung = '"+interaksi+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String interaksinm = rs.getString("jumlah");
+                t_hitung_interaksi_normal.setText(interaksinm+"/"+normal);
+                
+                double iinteraksinm = Double.parseDouble(interaksinm);
+                double jinteraksinm = iinteraksinm / inormal;
+                t_hasil_interaksi_normal.setText(String.format("%.10f",jinteraksinm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang hiv tapi tb
+        try{
+            //String hivtb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where penderita_hiv = '"+hiv+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String hivtb = rs.getString("jumlah");
+                t_hitung_hiv.setText(hivtb+"/"+tb);
+                
+                double ihivtb = Double.parseDouble(hivtb);
+                double jhivtb = ihivtb / itb;
+                t_hasil_hiv.setText(String.format("%.10f",jhivtb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang hiv tapi normal
+        try{
+            //String hivnm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where penderita_hiv = '"+hiv+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String hivnm = rs.getString("jumlah");
+                t_hitung_hiv_normal.setText(hivnm+"/"+normal);
+                
+                double ihivnm = Double.parseDouble(hivnm);
+                double jhivnm = ihivnm / inormal;
+                t_hasil_hiv_normal.setText(String.format("%.10f",jhivnm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang roko tapi tb
+        try{
+            //String rokotb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where perokok = '"+roko+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String rokotb = rs.getString("jumlah");
+                t_hitung_roko.setText(rokotb+"/"+tb);
+                
+                double irokotb = Double.parseDouble(rokotb);
+                double jrokotb = irokotb / itb;
+                t_hasil_roko.setText(String.format("%.10f",jrokotb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang hiv tapi normal
+        try{
+            //String rokonm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where perokok = '"+roko+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String rokonm = rs.getString("jumlah");
+                t_hitung_roko_normal.setText(rokonm+"/"+normal);
+                
+                double irokonm = Double.parseDouble(rokonm);
+                double jrokonm = irokonm / inormal;
+                t_hasil_roko_normal.setText(String.format("%.10f",jrokonm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang mabuk tapi tb
+        try{
+            //String mabuktb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where pemabuk = '"+mabuk+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String mabuktb = rs.getString("jumlah");
+                t_hitung_mabuk.setText(mabuktb+"/"+tb);
+                
+                double imabuktb = Double.parseDouble(mabuktb);
+                double jmabuktb = imabuktb / itb;
+                t_hasil_mabuk.setText(String.format("%.10f",jmabuktb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang mabuk tapi normal
+        try{
+            //String mabuknm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where pemabuk = '"+mabuk+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String mabuknm = rs.getString("jumlah");
+                t_hitung_mabuk_normal.setText(mabuknm+"/"+normal);
+                
+                double imabuknm = Double.parseDouble(mabuknm);
+                double jmabuknm = imabuknm / inormal;
+                t_hasil_mabuk_normal.setText(String.format("%.10f",jmabuknm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang narkoba tapi tb
+        try{
+            //String narkobatb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where pengguna_narkotika = '"+narkoba+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String narkobatb = rs.getString("jumlah");
+                t_hitung_narkoba.setText(narkobatb+"/"+tb);
+                
+                double inarkobatb = Double.parseDouble(narkobatb);
+                double jnarkobatb = inarkobatb / itb;
+                t_hasil_narkoba.setText(String.format("%.10f",jnarkobatb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang narkoba tapi normal
+        try{
+            //String narkobanm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where pengguna_narkotika = '"+narkoba+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String narkobanm = rs.getString("jumlah");
+                t_hitung_narkoba_normal.setText(narkobanm+"/"+normal);
+                
+                double inarkobanm = Double.parseDouble(narkobanm);
+                double jnarkobanm = inarkobanm / inormal;
+                t_hasil_narkoba_normal.setText(String.format("%.10f",jnarkobanm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang nyeridada tapi tb
+        try{
+            //String nydadatb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where nyeri_dada = '"+nydada+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String nydadatb = rs.getString("jumlah");
+                t_hitung_nydada.setText(nydadatb+"/"+tb);
+                
+                double inydadatb = Double.parseDouble(nydadatb);
+                double jnydadatb = inydadatb / itb;
+                t_hasil_nydada.setText(String.format("%.10f",jnydadatb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang nyeridada tapi normal
+        try{
+            //String nydadanm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where nyeri_dada = '"+nydada+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String nydadanm = rs.getString("jumlah");
+                t_hitung_nydada_normal.setText(nydadanm+"/"+normal);
+                
+                double inydadanm = Double.parseDouble(nydadanm);
+                double jnydadanm = inydadanm / inormal;
+                t_hasil_nydada_normal.setText(String.format("%.10f",jnydadanm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang pusingsesak tapi tb
+        try{
+            //String pusingtb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where pusing_sesak = '"+pusing+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String pusingtb = rs.getString("jumlah");
+                t_hitung_pusing.setText(pusingtb+"/"+tb);
+                
+                double ipusingtb = Double.parseDouble(pusingtb);
+                double jpusingtb = ipusingtb / itb;
+                t_hasil_pusing.setText(String.format("%.10f",jpusingtb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang pusingsesak tapi normal
+        try{
+            //String pusingnm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where pusing_sesak = '"+pusing+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String pusingnm = rs.getString("jumlah");
+                t_hitung_pusing_normal.setText(pusingnm+"/"+normal);
+                
+                double ipusingnm = Double.parseDouble(pusingnm);
+                double jpusingnm = ipusingnm / inormal;
+                t_hasil_pusing_normal.setText(String.format("%.10f",jpusingnm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang dahakkeruh tapi tb
+        try{
+            //String dahakkeruhtb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where batuk_dahak_keruh = '"+dahakkeruh+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String dahakkeruhtb = rs.getString("jumlah");
+                t_hitung_dahakkeruh.setText(dahakkeruhtb+"/"+tb);
+                
+                double idahakkeruhtb = Double.parseDouble(dahakkeruhtb);
+                double jdahakkeruhtb = idahakkeruhtb / itb;
+                t_hasil_dahakkeruh.setText(String.format("%.10f",jdahakkeruhtb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang dahakkeruh tapi normal
+        try{
+            //String dahakkeruhnm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where batuk_dahak_keruh = '"+dahakkeruh+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String dahakkeruhnm = rs.getString("jumlah");
+                t_hitung_dahakkeruh_normal.setText(dahakkeruhnm+"/"+normal);
+                
+                double idahakkeruhnm = Double.parseDouble(dahakkeruhnm);
+                double jdahakkeruhnm = idahakkeruhnm / inormal;
+                t_hasil_dahakkeruh_normal.setText(String.format("%.10f",jdahakkeruhnm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang batukdarah tapi tb
+        try{
+            //String batukdarahtb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where batuk_darah = '"+batukdarah+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String batukdarahtb = rs.getString("jumlah");
+                t_hitung_batukdarah.setText(batukdarahtb+"/"+tb);
+                
+                double ibatukdarahtb = Double.parseDouble(batukdarahtb);
+                double jbatukdarahtb = ibatukdarahtb / itb;
+                t_hasil_batukdarah.setText(String.format("%.10f",jbatukdarahtb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang batukdarah tapi normal
+        try{
+            //String batukdarahnm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where batuk_darah = '"+batukdarah+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String batukdarahnm = rs.getString("jumlah");
+                t_hitung_batukdarah_normal.setText(batukdarahnm+"/"+normal);
+                
+                double ibatukdarahnm = Double.parseDouble(batukdarahnm);
+                double jbatukdarahnm = ibatukdarahnm / inormal;
+                t_hasil_batukdarah_normal.setText(String.format("%.10f",jbatukdarahnm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang bbturun tapi tb
+        try{
+            //String bbtb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where penurunan_bb = '"+bb+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String bbtb = rs.getString("jumlah");
+                t_hitung_bb.setText(bbtb+"/"+tb);
+                
+                double ibbtb = Double.parseDouble(bbtb);
+                double jbbtb = ibbtb / itb;
+                t_hasil_bb.setText(String.format("%.10f",jbbtb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang bbturun tapi normal
+        try{
+            //String bbnm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where penurunan_bb = '"+bb+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String bbnm = rs.getString("jumlah");
+                t_hitung_bb_normal.setText(bbnm+"/"+normal);
+                
+                double ibbnm = Double.parseDouble(bbnm);
+                double jbbnm = ibbnm / inormal;
+                t_hasil_bb_normal.setText(String.format("%.10f",jbbnm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang pucat tapi tb
+        try{
+            //String pucattb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where kulit_pucat = '"+pucat+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String pucattb = rs.getString("jumlah");
+                t_hitung_pucat.setText(pucattb+"/"+tb);
+                
+                double ipucattb = Double.parseDouble(pucattb);
+                double jpucattb = ipucattb / itb;
+                t_hasil_pucat.setText(String.format("%.10f",jpucattb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang pucat tapi normal
+        try{
+            //String pucatnm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where kulit_pucat = '"+pucat+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String pucatnm = rs.getString("jumlah");
+                t_hitung_pucat_normal.setText(pucatnm+"/"+normal);
+                
+                double ipucatnm = Integer.parseInt(pucatnm);
+                double jpucatnm = ipucatnm / inormal;
+                t_hasil_pucat_normal.setText(String.format("%.10f",jpucatnm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang kelelahan tapi tb
+        try{
+            //String kelelahantb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where kelelahan = '"+kelelahan+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String kelelahantb = rs.getString("jumlah");
+                t_hitung_kelelahan.setText(kelelahantb+"/"+tb);
+                
+                double ikelelahantb = Double.parseDouble(kelelahantb);
+                double jkelelahantb = ikelelahantb / itb;
+                t_hasil_kelelahan.setText(String.format("%.10f",jkelelahantb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang kelelahan tapi normal
+        try{
+            //String kelelahannm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where kelelahan = '"+kelelahan+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String kelelahannm = rs.getString("jumlah");
+                t_hitung_kelelahan_normal.setText(kelelahannm+"/"+normal);
+                
+                double ikelelahannm = Double.parseDouble(kelelahannm);
+                double jkelelahannm = ikelelahannm / inormal;
+                t_hasil_kelelahan_normal.setText(String.format("%.10f",jkelelahannm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang lemas tapi tb
+        try{
+            //String lemastb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where lemas = '"+lemas+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String lemastb = rs.getString("jumlah");
+                t_hitung_lemas.setText(lemastb+"/"+tb);
+                
+                double ilemastb = Double.parseDouble(lemastb);
+                double jlemastb = ilemastb / itb;
+                t_hasil_lemas.setText(String.format("%.10f",jlemastb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang lemas tapi normal
+        try{
+            //String lemasnm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where lemas = '"+lemas+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String lemasnm = rs.getString("jumlah");
+                t_hitung_lemas_normal.setText(lemasnm+"/"+normal);
+                
+                double ilemasnm = Double.parseDouble(lemasnm);
+                double jlemasnm = ilemasnm / inormal;
+                t_hasil_lemas_normal.setText(String.format("%.10f",jlemasnm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang adabenjolan tapi tb
+        try{
+            //String benjoltb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where ada_benjolan = '"+benjol+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String benjoltb = rs.getString("jumlah");
+                t_hitung_benjol.setText(benjoltb+"/"+tb);
+                
+                double ibenjoltb = Double.parseDouble(benjoltb);
+                double jbenjoltb = ibenjoltb / itb;
+                t_hasil_benjol.setText(String.format("%.10f",jbenjoltb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang adabenjol tapi normal
+        try{
+            //String benjolnm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where ada_benjolan = '"+benjol+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String benjolnm = rs.getString("jumlah");
+                t_hitung_benjol_normal.setText(benjolnm+"/"+normal);
+                
+                double ibenjolnm = Double.parseDouble(benjolnm);
+                double jbenjolnm = ibenjolnm / inormal;
+                t_hasil_benjol_normal.setText(String.format("%.10f",jbenjolnm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang demam tapi tb
+        try{
+            //String demamtb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where demam = '"+demam+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String demamtb = rs.getString("jumlah");
+                t_hitung_demam.setText(demamtb+"/"+tb);
+                
+                double idemamtb = Double.parseDouble(demamtb);
+                double jdemamtb = idemamtb / itb;
+                t_hasil_demam.setText(String.format("%.10f",jdemamtb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang demam tapi normal
+        try{
+            //String demamnm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where demam = '"+demam+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String demamnm = rs.getString("jumlah");
+                t_hitung_demam_normal.setText(demamnm+"/"+normal);
+                
+                double idemamnm = Double.parseDouble(demamnm);
+                double jdemamnm = idemamnm / inormal;
+                t_hasil_demam_normal.setText(String.format("%.10f",jdemamnm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang kejang tapi tb
+        try{
+            //String kejangtb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where kejang = '"+kejang+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String kejangtb = rs.getString("jumlah");
+                t_hitung_kejang.setText(kejangtb+"/"+tb);
+                
+                double ikejangtb = Double.parseDouble(kejangtb);
+                double jkejangtb = ikejangtb / itb;
+                t_hasil_kejang.setText(String.format("%.10f",jkejangtb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang kejang tapi normal
+        try{
+            //String kejangnm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where kejang = '"+kejang+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String kejangnm = rs.getString("jumlah");
+                t_hitung_kejang_normal.setText(kejangnm+"/"+normal);
+                
+                double ikejangnm = Double.parseDouble(kejangnm);
+                double jkejangnm = ikejangnm / inormal;
+                t_hasil_kejang_normal.setText(String.format("%.10f",jkejangnm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang nysendi tapi tb
+        try{
+            //String nysenditb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where nyeri_persendian = '"+nysendi+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String nysenditb = rs.getString("jumlah");
+                t_hitung_nysendi.setText(nysenditb+"/"+tb);
+                
+                double inysenditb = Double.parseDouble(nysenditb);
+                double jnysenditb = inysenditb / itb;
+                t_hasil_nysendi.setText(String.format("%.10f",jnysenditb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang nysendi tapi normal
+        try{
+            //String nysendinm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where nyeri_persendian = '"+nysendi+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String nysendinm = rs.getString("jumlah");
+                t_hitung_nysendi_normal.setText(nysendinm+"/"+normal);
+                
+                double inysendinm = Double.parseDouble(nysendinm);
+                double jnysendinm = inysendinm / inormal;
+                t_hasil_nysendi_normal.setText(String.format("%.10f",jnysendinm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang keringat tapi tb
+        try{
+            //String keringattb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where keringat_malam = '"+keringat+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String keringattb = rs.getString("jumlah");
+                t_hitung_keringat.setText(keringattb+"/"+tb);
+                
+                double ikeringattb = Double.parseDouble(keringattb);
+                double jkeringattb = ikeringattb / itb;
+                t_hasil_keringat.setText(String.format("%.10f",jkeringattb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang keringat tapi normal
+        try{
+            //String keringatnm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where keringat_malam = '"+keringat+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String keringatnm = rs.getString("jumlah");
+                t_hitung_keringat_normal.setText(keringatnm+"/"+normal);
+                
+                double ikeringatnm = Double.parseDouble(keringatnm);
+                double jkeringatnm = ikeringatnm / inormal;
+                t_hasil_keringat_normal.setText(String.format("%.10f",jkeringatnm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang panas tapi tb
+        try{
+            //String panastb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where panas_dingin = '"+panas+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String panastb = rs.getString("jumlah");
+                t_hitung_panas.setText(panastb+"/"+tb);
+                
+                double ipanastb = Double.parseDouble(panastb);
+                double jpanastb = ipanastb / itb;
+                t_hasil_panas.setText(String.format("%.10f",jpanastb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang panas tapi normal
+        try{
+            //String panasnm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where panas_dingin = '"+panas+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String panasnm = rs.getString("jumlah");
+                t_hitung_panas_normal.setText(panasnm+"/"+normal);
+                
+                double ipanasnm = Double.parseDouble(panasnm);
+                double jpanasnm = ipanasnm / inormal;
+                t_hasil_panas_normal.setText(String.format("%.10f",jpanasnm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang makan tapi tb
+        try{
+            //String makantb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where nafsu_makan_hilang = '"+makan+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String makantb = rs.getString("jumlah");
+                t_hitung_makan.setText(makantb+"/"+tb);
+                
+                double imakantb = Double.parseDouble(makantb);
+                double jmakantb = imakantb / itb;
+                t_hasil_makan.setText(String.format("%.10f",jmakantb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang makan tapi normal
+        try{
+            //String makannm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where nafsu_makan_hilang = '"+makan+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String makannm = rs.getString("jumlah");
+                t_hitung_makan_normal.setText(makannm+"/"+normal);
+                
+                double imakannm = Double.parseDouble(makannm);
+                double jmakannm = imakannm / inormal;
+                t_hasil_makan_normal.setText(String.format("%.10f",jmakannm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang urine tapi tb
+        try{
+            //String urinetb = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where urine_kemerahan = '"+urine+"' and diagnosa = 'POSITIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String urinetb = rs.getString("jumlah");
+                t_hitung_urine.setText(urinetb+"/"+tb);
+                
+                double iurinetb = Double.parseDouble(urinetb);
+                double jurinetb = iurinetb / itb;
+                t_hasil_urine.setText(String.format("%.10f",jurinetb));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        //mencari peluang urine tapi normal
+        try{
+            //String urinenm = "";
+            String sql = "select count(id_pasien)+1 as jumlah from training where urine_kemerahan = '"+urine+"' and diagnosa = 'NEGATIF TUBERKULOSIS'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                String urinenm = rs.getString("jumlah");
+                t_hitung_urine_normal.setText(urinenm+"/"+normal);
+                
+                double iurinenm = Double.parseDouble(urinenm);
+                double jurinenm = iurinenm / inormal;
+                t_hasil_urine_normal.setText(String.format("%.10f",jurinenm));
+            }
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
